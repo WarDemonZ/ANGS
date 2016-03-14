@@ -1,0 +1,229 @@
+/* This file will hold styles for all layouts using the alpha grid (i.e. not the mobile layout). */
+/* HEADER */
+#section-header {
+	
+}
+#zone-header {
+	-webkit-box-shadow: 0px 10px 10px -10px rgba(0,0,0,0.4);
+    -moz-box-shadow: 0px 10px 10px -10px rgba(0,0,0,0.4);
+    box-shadow: 0px 10px 10px -10px rgba(0,0,0,0.4);
+}
+#region-branding {
+	text-align: right;
+}
+#region-branding .logo-img img {
+	margin-bottom: 0;
+	height: 60px;
+	width: auto;
+}
+
+#region-branding,
+#region-header-first {
+	float: right;
+}
+
+/* REGISTRATION */
+#user-register-form {
+	
+}
+#user-register-form input,
+#user-register-form select {
+	width: 50%;
+}
+#user-register-form input[type=checkbox] {
+	width: auto;
+}
+
+/* REGIONS/ZONES */
+#zone-header {
+  
+}
+#region-menu {
+
+}
+#region-menu ul.megamenu-skin-angs {
+
+}
+#region-menu ul.megamenu-skin-angs li {
+  border-right: solid 1px #313131;
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
+#region-menu ul.megamenu-skin-angs li.last {
+  border-right: none;
+}
+#region-menu ul.megamenu-skin-angs li a {
+  color: #FFF;
+  text-decoration: none;
+  display: inline-block;
+}
+#region-menu ul.megamenu-skin-angs li a.active {
+}
+#region-menu ul.megamenu-skin-angs li a:hover,
+#region-menu ul.megamenu-skin-angs li a:focus,
+#region-menu ul.megamenu-skin-angs li a:active {
+  
+}
+#region-menu ul.megamenu-skin-angs li > span {
+  display: inline-block;
+  padding: 0 1.5em;
+  color: #FFF;
+  line-height: 60px;
+}
+#region-menu ul.megamenu-skin-angs li > span:hover {
+  background-color: #313131;
+  cursor: pointer;
+}
+#region-menu ul.megamenu-skin-angs li ul.megamenu-bin {
+	padding: 0;
+	background: url(../images/dropdown-BG.png) repeat center center transparent;
+}
+#region-menu ul.megamenu-skin-angs li ul.megamenu-bin li {
+	border-bottom: solid 1px #FFF;
+}
+#region-menu ul.megamenu-skin-angs li ul.megamenu-bin li > span {
+	display: block;
+	line-height: 38px;
+}
+
+#region-branding {
+  text-align: right;
+}
+#region-branding .logo-img {
+	float: none;
+	margin: 0;
+	padding: 0;
+}
+
+#zone-hero {
+
+}
+#zone-hero h1,
+#zone-hero h2,
+#zone-hero h3 {
+
+}
+#zone-hero h2 {
+  font-size: 2.75em;
+  line-height: 1em;
+  margin: 0.25em 0;
+}
+#zone-hero h3 {
+  font-size: 1.2em;
+  margin: 0.5em 0 0;
+}
+#zone-hero .view {
+  text-align: center;
+}
+
+#zone-preface {
+
+}
+#region-preface-first {
+
+}
+#region-preface-second {
+
+}
+#region-preface-third {
+
+}
+#region-preface-fourth {
+
+}
+
+#zone-content {
+  
+}
+#region-content {
+  
+}
+#region-content .region-content-inner {
+  padding: 1em 0;
+}
+#region-sidebar-first {
+  background: #FFF;
+  -webkit-box-shadow:inset -5px 0 25px -15px #000000;
+  box-shadow:inset -5px 0 25px -15px #000000;
+}
+#region-sidebar-first ul {
+  margin-top: 5em;
+}
+#region-sidebar-first ul li {
+
+}
+#region-sidebar-first ul li a {
+  padding: 0.5em 0 0.5em 2.75em;
+  background-image: none;
+}
+#region-sidebar-first ul li a.active {
+  background: url(../images/active-Menu.png) left center no-repeat transparent;
+  color: #33b7a0;
+}
+#region-sidebar-second {
+
+}
+
+#zone-parallax {
+
+}
+#zone-parallax .block {
+  
+}
+#zone-parallax h2 {
+  
+}
+#zone-parallax .apply {
+  
+}
+#zone-parallax .apply a {
+  
+}
+
+#zone-postscript {
+	padding: 1em 0;
+}
+#region-postscript-first {
+
+}
+#region-postscript-second {
+
+}
+#region-postscript-third {
+
+}
+
+#zone-footer {
+  padding: 1em 0;
+}
+#region-footer .block {
+  padding: 20px 0 0 0;
+}
+#region-footer .block a, 
+#region-footer .block p {
+  color: #5f5f5f;
+  margin-bottom: 0;
+  font-size: 8pt;
+}
+
+#zone-content-wrapper,
+#zone-content,
+#zone-content > * {
+  height: 100%;
+}
+
+.frontpage #zone-content-wrapper,
+.frontpage #zone-content,
+.frontpage #zone-content > * {
+  height: auto;
+}
+
+/* STICKY FOOTER */
+html, body { height: 100%; margin: 0; }
+#page { display: table; width: 100%; }
+html > body #page { height: 100%; }
+*:first-child+html #page { height: auto; }
+.section { display: table-row; }
+html > body .section-content { height: 100%; }
+*:first-child+html body .section-content { height: auto; }
