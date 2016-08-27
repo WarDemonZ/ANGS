@@ -1,0 +1,4 @@
+name = Ajax Orderform
+description = Creates an AJAX order form linking to the clothing taxonomy.
+core = 7.x
+package = Custom

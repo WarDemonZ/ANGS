@@ -747,8 +747,8 @@ tr.status-Blocked td {
 .flag-waiting .flag-throbber {
     background: transparent url(../images/ajax.gif) no-repeat 0px 0px;
     float: none;
-    height: 18px;
-    width: 26px;
+    height: 11px;
+    width: 16px;
     margin: 0 10px;
     color: #FFF;
 }

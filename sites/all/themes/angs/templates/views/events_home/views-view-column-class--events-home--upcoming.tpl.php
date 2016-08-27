@@ -9,9 +9,13 @@
  */
 ?>
 <?php 
-  if ($count = count($rows) < 3) {
-    $classes = ' omega push-' . (4 / $count);
-  } 
+  if ($rows) {
+    $count = count($rows);
+    if ($count < 3) {
+      $omega = ' omega';
+      $push = ' push-' . (4 / $count);
+    }
+  }  
 ?>
 <?php print $wrapper_prefix; ?>
   <?php if (!empty($title)): ?>
@@ -19,8 +23,8 @@
   <?php endif; ?>
   <?php print $list_type_prefix; ?>
     <?php foreach ($rows as $id => $row): ?>
-    <?php if ($id == 0) { $classes_array[$id] .= $classes; } ?>
-      <li class="<?php print $classes_array[$id]; ?>"><div class="footer-event"><?php print $row; ?></div></li>
+    <?php if ($id == ($count - 1)) { $classes_array[$id] .= $omega; } ?>
+      <li class="<?php print $classes_array[$id] . $push; ?>"><div class="footer-event"><?php print $row; ?></div></li>
     <?php endforeach; ?>
   <?php print $list_type_suffix; ?>
 <?php print $wrapper_suffix;

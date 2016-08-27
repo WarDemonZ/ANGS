@@ -1,0 +1,39 @@
+<?php
+/*
+* Invokes hook_form_FORM_ID_alter()
+*/
+
+function angs_orderform_form_clothing_request_entityform_edit_form_alter(&$form, &$form_state, $form_id) {
+  $form['field_clothing_item'][LANGUAGE_NONE]['#ajax'] = array(
+    'event' => 'change',
+    'callback' => 'angs_orderform_clothing_callback',
+    'wrapper' => 'block-views-order-request-block',
+    'method' => 'replace',
+    'effect' => 'fade',
+  );
+}
+
+/**
+ * Replace the image with the one selected by the dropdown.
+ *
+ * @param Object
+ *   $term term item to be fetched.
+ */
+function angs_orderform_clothing_callback($form, $form_state) {
+  if ($term = taxonomy_term_load($form_state['triggering_element']['#value'])) {
+    $term_wrapper = entity_metadata_wrapper('taxonomy_term', $term);
+    if ($img = $term_wrapper->field_image->value()) {
+      $info = image_get_info($img['uri']);
+      $vars = array(
+        'path' => $img['uri'],
+        'width' => $info['width'],
+        'height' => $info['height'],
+        'alt' => t($term->name) ,
+        'title' => t($term->name) ,
+      );
+      $image = '<div id="block-views-order-request-block">' . theme_image($vars) . '</div>';
+    }
+
+  return $image;
+  }
+}
