@@ -11,3 +11,9 @@
  * for more information on this topic.
  */
 
+/**
+* hook_form_FORM_ID_alter
+*/
+function angs_form_search_block_form_alter(&$form, &$form_state, $form_id) {
+    $form['actions']['submit']['#value'] = decode_entities('&#xf002;');
+} 
