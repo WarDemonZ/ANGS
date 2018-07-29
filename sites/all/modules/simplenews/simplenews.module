@@ -2586,6 +2586,8 @@ function simplenews_newsletter_update_sent_status($node, $status = SIMPLENEWS_ST
   }
   $newsletter->status = $status;
   simplenews_newsletter_save($newsletter);
+
+  module_invoke_all('simplenews_sent_status_update', $node, $status);
 }
 
 /**

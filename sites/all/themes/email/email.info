@@ -1,0 +1,7 @@
+name = Email
+description = A custom theme for HTML emails
+core = 7.x
+screenshot = screenshot.png
+engine = phptemplate
+
+stylesheets[all][] = email.css

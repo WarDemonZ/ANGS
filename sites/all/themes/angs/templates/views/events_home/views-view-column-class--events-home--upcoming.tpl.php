@@ -11,6 +11,7 @@
 <?php 
   if ($rows) {
     $count = count($rows);
+    $omega = $push = '';
     if ($count < 3) {
       $omega = ' omega';
       $push = ' push-' . (4 / $count);

@@ -3,6 +3,30 @@
  *  apply to the normal and widescreen layouts. You may override these styles in the normal 
  *  and widescreen CSS files as appropriate. */
 
- #region-menu ul.megamenu-skin-angs li > span {
+/* BREAKPOINT VISIBILITY */
+.visible-desktop { display: none; }
+.visible-tablet { display: block; }
+.visible-phone { display: none; }
+
+.hidden-desktop { display: block; }
+.hidden-tablet { display: none; }
+.hidden-phone { display: block; }
+
+#region-menu ul.megamenu-skin-angs li > span {
     padding: 0 0.75em;
+}
+
+ /* ACCOUNT */
+#region-content #user-register-form > div {
+  width: 62%;
+}
+
+#region-content #user-login > div,
+#region-content #user-pass > div {
+  width: 62%;
+}
+
+/* CONTACT */
+#region-content #contact-site-form > div {
+  width: 62%;
 }

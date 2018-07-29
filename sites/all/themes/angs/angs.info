@@ -54,6 +54,13 @@ css[global.css][name] = Your custom global styles
 css[global.css][description] = This file holds all the globally active custom CSS of your theme.
 css[global.css][options][weight] = 10
 
+; OPTIONAL JAVASCRIPT
+
+libraries[angs][name] = Menu Merge
+libraries[angs][description] = Combines the logged in menu into the single main menu
+libraries[angs][js][0][file] = angs_menu_merge.js
+libraries[angs][js][0][options][weight] = 15
+
 ; THEME SETTINGS (DEFAULTS)
 
 settings[alpha_grid] = 'alpha_default'

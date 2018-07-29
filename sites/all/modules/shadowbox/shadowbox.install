@@ -70,3 +70,8 @@ function shadowbox_requirements($phase) {
 function shadowbox_update_7001() {
   drupal_theme_rebuild();
 }
+
+function shadowbox_update_7400() {
+  $module_list = array('image_shadowbox');
+  module_enable($module_list, TRUE);
+}

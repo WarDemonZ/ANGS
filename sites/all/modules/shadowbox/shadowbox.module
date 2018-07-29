@@ -46,9 +46,9 @@ function shadowbox_library() {
       array(
         'type' => 'inline',
         'scope' => 'header',
-        'group' => JS_THEME,
+        'group'=> JS_THEME,
         'data' => '
-          Shadowbox.path = "' . base_path() . $shadowbox_location . '/";
+          shadowbox.path = "' . base_path() . $shadowbox_location . '/";
         ',
       ),
       drupal_get_path('module', 'shadowbox') . '/shadowbox_auto.js' => array(),
@@ -61,7 +61,7 @@ function shadowbox_library() {
       array(
         'type' => 'inline',
         'media' => 'print',
-        'data' => '
+	'data' => '
           #sb-container { position: relative; }
           #sb-overlay { display: none; }
           #sb-wrapper { position: relative; top: 0; left: 0; }
@@ -154,27 +154,6 @@ function shadowbox_menu() {
  */
 function shadowbox_init() {
   _shadowbox_construct_header();
-}
-
-/**
- * Implements hook_theme().
- */
-function shadowbox_theme() {
-
-  return array(
-    'shadowbox_formatter' => array(
-      'variables' => array(
-        'itemid' => NULL,
-        'item' => NULL,
-        'image_style' => "thumbnail",
-        'image_link' => "",
-        'gallery' => "",
-        'compact' => 0,
-        'title' => "",
-      ),
-    ),
-  );
-
 }
 
 /**
@@ -299,225 +278,112 @@ function _shadowbox_activation() {
   else {
     $page_match = TRUE;
   }
-
   return $page_match;
 }
 
 /**
- * Implements hook_field_formatter_info().
+ * Implements hook_theme().
  */
-function shadowbox_field_formatter_info() {
-  $formatters = array(
-    'shadowbox' => array(
-      'label' => t('Shadowbox'),
-      'field types' => array('image'),
-      'settings' => array('image_style' => '', 'image_link' => '', 'gallery' => '', 'compact' => '', 'title' => ''),
+function shadowbox_theme() {
+
+  return array(
+
+    'shadowbox_formatter' => array(
+      'variables' => array(
+        'innerHTML' => '',
+        'url' => '',
+        'rel' => '',
+        'title' => '',
+        'class' => '',
+      ),
     ),
+
+    'shadowbox_thumbnail' => array(
+      'variables' => array(
+        'path' => '',
+        'image_style' => '',
+        'attributes' => '',
+        'title' => '',
+        'alt' => '',
+     ),
+    ),
+
   );
 
-  return $formatters;
 }
 
 /**
- * Implements hook_field_formatter_settings_form().
- */
-function shadowbox_field_formatter_settings_form($field, $instance, $view_mode, $form, &$form_state) {
-  $display = $instance['display'][$view_mode];
-  $settings = $display['settings'];
-
-  $image_styles = image_style_options(FALSE);
-  $element['image_style'] = array(
-    '#title' => t('Image style'),
-    '#type' => 'select',
-    '#default_value' => $settings['image_style'],
-    '#empty_option' => t('None (original image)'),
-    '#options' => $image_styles,
-  );
-
-  $element['image_link'] = array(
-    '#title' => t('Link image to'),
-    '#type' => 'select',
-    '#default_value' => $settings['image_link'],
-    '#empty_option' => t('None (original image)'),
-    '#options' => $image_styles,
-  );
-
-  $gallery_options = array(
-    'page' => 'gallery page',
-    'field' => 'gallery field',
-    'nid' => 'gallery entity',
-  );
-
-  $element['gallery'] = array(
-    '#title' => t('gallery'),
-    '#type' => 'select',
-    '#default_value' => $settings['gallery'],
-    '#empty_option' => t('None (individual)'),
-    '#options' => $gallery_options,
-  );
-
-  $element['compact'] = array(
-    '#title' => t('compact'),
-    '#type' => 'checkbox',
-    '#default_value' => $settings['compact'],
-  );
-
-  $title_options = array(
-    'title' => 'image title',
-    'alt' => 'image alt',
-    'node' => 'node title',
-  );
-
-  $element['title'] = array(
-    '#title' => t('title'),
-    '#type' => 'select',
-    '#default_value' => $settings['title'],
-    '#empty_option' => t('None'),
-    '#options' => $title_options,
-  );
-
-  return $element;
-}
-
-/**
- * Implements hook_field_formatter_settings_summary().
- */
-function shadowbox_field_formatter_settings_summary($field, $instance, $view_mode) {
-  $display = $instance['display'][$view_mode];
-  $settings = $display['settings'];
-
-  $summary = array();
-
-  $image_styles = image_style_options(FALSE);
-
-  // Unset possible 'No defined styles' option.
-  unset($image_styles['']);
-  // Styles could be lost because of enabled/disabled modules that defines
-  // their styles in code.
-  if (isset($image_styles[$settings['image_style']])) {
-    $summary[] = t('Image style: @style', array('@style' => $image_styles[$settings['image_style']]));
-  }
-  else {
-    $summary[] = t('Original image');
-  }
-
-  if (isset($image_styles[$settings['image_link']])) {
-    $summary[] = t('Linked to: @style', array('@style' => $image_styles[$settings['image_link']]));
-  }
-  else {
-    $summary[] = t('Linked to: Original image');
-  }
-
-  $gallery_options = array(
-    'page' => 'gallery page',
-    'field' => 'gallery field',
-    'nid' => 'gallery entity',
-  );
-
-  if (isset($gallery_options[$settings['gallery']])) {
-    $summary[] = t('as @gallery', array('@gallery' => (isset($settings['compact']) && $settings['compact'] ? 'compact ' : '') . $gallery_options[$settings['gallery']]));
-  }
-
-  $title_options = array(
-    'title' => 'image title',
-    'alt' => 'image alt',
-    'node' => 'node title',
-  );
-
-  if (isset($title_options[$settings['title']])) {
-    $summary[] = t('with @title as title', array('@title' => $title_options[$settings['title']]));
-  }
-
-  return implode('<br />', $summary);
-}
-
-/**
- * Implements hook_field_formatter_view().
- */
-function shadowbox_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
-  $element = array();
-
-  $shadowbox_enabled_path = _shadowbox_activation() && variable_get('shadowbox_enabled', TRUE);
-
-  switch ($display['settings']['gallery']) {
-    case 'page':
-      $gallery_id = 'gallery';
-      break;
-    case 'field':
-      $gallery_id = $field['field_name'];
-      break;
-    case 'nid':
-      $info = entity_get_info($entity_type);
-      $id = $info['entity keys']['id'];
-      $gallery_id = "{$entity_type}-{$entity->$id}";
-      break;
-    default:
-      $gallery_id = "";
-      break;
-  }
-
-  foreach ($items as $delta => $item) {
-
-    switch ($display['settings']['title']) {
-      case 'alt':
-        $title = $item['alt'];
-        break;
-      case 'title':
-        $title = $item['title'];
-        break;
-      case 'node':
-        $title = $entity->title;
-        break;
-      default:
-        $title = '';
-        break;
-    }
-
-    $element[$delta] = array(
-      '#theme' => 'shadowbox_formatter',
-      '#itemid' => $delta,
-      '#item' => $item,
-      '#image_style' => $display['settings']['image_style'],
-      '#image_link' => $display['settings']['image_link'],
-      '#gallery' => $gallery_id,
-      '#compact' => $display['settings']['compact'],
-      '#title' => $title,
-    );
-
-    if ($shadowbox_enabled_path) {
-      $element[$delta]['#attached']['library'][] = array('shadowbox', 'shadowbox');
-    }
-
-  }
-
-  return $element;
-}
-
-/**
- * Returns HTML for an image field formatter.
+ * Returns HTML for a field formatted with shadowbox.
  *
  * @param $variables
  *   An associative array containing:
- *   - item: An array of image data.
- *   - image_style: An optional image style.
- *   - path: An array containing the link 'path' and link 'options'.
+ *   - innerHTML: The html inside the shadowbox link.
+ *   - url: The shadowbox link url.
+ *   - rel: The rel attribute for shadowbox link.
+ *   - title: The title attribute for shadowbox link.
+ *   - class: The class attribute for the wrapper.
  *
  * @ingroup themeable
  */
 function theme_shadowbox_formatter($variables) {
 
-  $item = $variables['item'];
-  $image = array(
-    'path' => $item['uri'],
-    'alt' => $item['alt'],
-  );
-  // Do not output an empty 'title' attribute.
-  if (drupal_strlen($item['title']) > 0) {
-    $image['title'] = $item['title'];
-  }
+  // The inner HTML. Can be a thumbnail, ico, ...
+  $output = $variables['innerHTML'];
 
-  $image_style = $variables['image_style'];
-  if ( $variables['itemid'] == 0 || (isset($variables['compact']) && !$variables['compact']) ) {
+  // the link
+  $link_attributes = array(
+    'rel' => $variables['rel'],
+    'title' => $variables['title'],
+  );
+
+  $options = array(
+    'attributes' => $link_attributes,
+    'html' => TRUE,
+  );
+
+  $output = l($output, $variables['url'], $options);
+
+  // wrap shadowbox link into a div layer
+  $output = '<div class="' . $variables['class'] . '"' . ($variables['innerHTML'] == '' ? ' style="display:none;"' : '' ) . '>' . $output . '</div>';
+
+  return $output;
+
+}
+
+/**
+ * Returns an image.
+ *
+ * @param $variables
+ *   An associative array containing:
+ *   - path: The uri || url of the image.
+ *   - image_style: An optional image style.
+ *   - attributes: An optional array of attributes.
+ *   - title: The title to use on the image.
+ *   - alt: An optional alt attribute.
+ *
+ * @ingroup themeable
+ */
+function theme_shadowbox_thumbnail($variables) {
+
+    $image = array(
+      'path' => $variables['path'],
+    );
+
+    if (isset($variables['attributes']) && $variables['attributes']) {
+	  $image['attributes'] = $variables['attributes'];
+    }
+
+    if (isset($variables['alt']) && drupal_strlen($variables['alt']) > 0) {
+	  $image['alt'] = $variables['alt'];
+    }
+
+    // Do not output an empty 'title' attribute.
+    if (isset($variables['title']) && drupal_strlen($variables['title']) > 0) {
+      $image['title'] = $variables['title'];
+      if (!isset($image['alt'])) $image['alt'] = $variables['title'];
+    }
+
+    $image_style = $variables['image_style'];
     if ($image_style) {
       $image['style_name'] = $image_style;
       $image['attributes'] = array('class' => 'image-'. $image_style);
@@ -526,34 +392,7 @@ function theme_shadowbox_formatter($variables) {
     else {
       $output = theme('image', $image);
     }
-  }
-  else {
-    $output = "";
-  }
 
-  $linked_style = $variables['image_link'];
-  if ($linked_style) {
-    $path = image_style_url($linked_style, $item['uri']);
-  }
-  else {
-    $path = $item['uri'];
-  }
+    return $output;
 
-  $gallery_id = $variables['gallery'];
-  $rel = ($gallery_id != '') ? "shadowbox[$gallery_id]" : 'shadowbox';
-
-  $link_attributes = array(
-    'rel' => $rel,
-    'title' => $variables['title'],
-  );
-  $options = array(
-    'attributes' => $link_attributes,
-    'html' => TRUE,
-  );
-
-  $output = l($output, file_create_url($path), $options);
-
-  $wrapper_classes = ($gallery_id != '') ? "sb-image sb-gallery sb-gallery-$gallery_id" : 'sb-image sb-individual';
-
-  return '<div class="' . $wrapper_classes . '"' . (( $variables['itemid'] == 0 || (isset($variables['compact']) && !$variables['compact']) ) ? '' : 'style="display:none;' ) . '>' . $output . '</div>';
 }

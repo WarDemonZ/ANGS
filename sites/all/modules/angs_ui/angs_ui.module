@@ -1,0 +1,74 @@
+<?php
+/*
+* Invokes hook_form_alter()
+*/
+function angs_ui_form_alter(&$form, &$form_state, $form_id) {
+	$tabs = menu_primary_local_tasks();
+
+	// Contact form
+  	if ($form_id == "contact_site_form") {
+  		$form['page_title'] = array(
+  			'#prefix' => '<h1 class="title" id="page-title">',
+  			'#markup' => t('Contact Us'),
+  			'#suffix' => '</h1>',
+  			'#weight' => -99,
+  		);
+  	}
+
+  	// Registration form
+  	if ($form_id == "user_register_form") {
+  		$form['page_title'] = array(
+  			'#prefix' => '<h1 class="title" id="page-title">',
+  			'#markup' => t('Membership Application'),
+  			'#suffix' => '</h1>',
+  			'#weight' => -99,
+  		);
+  		$form['actions']['submit']['#value'] = t('Apply for Membership');
+
+      if (array_key_exists('countrycode', $form['account'])) {
+        if (count($form['account']['countrycode']['#options']) < 2) {
+          $form['account']['countrycode']['#access'] = FALSE;
+        }
+      }
+      if (array_key_exists('number', $form['account'])) {
+        $form['account']['number']['#title'] = t('Mobile Number');
+        $form['account']['number']['#description'] = t('Enter your number without the leading 0, eg 77491...');
+      }
+  	}
+  	// Login form
+  	if ($form_id == "user_login") {
+  		$form['page_title'] = array(
+  			'#prefix' => '<h1 class="title" id="page-title">',
+  			'#markup' => t('Login'),
+  			'#suffix' => '</h1>',
+  			'#weight' => -99,
+  		);
+  		$form['local_tabs'] = array(
+  			'#prefix' => '<ul class="tabs primary clearfix">',
+  			'#markup' => drupal_render($tabs),
+  			'#suffix' => '</ul>',
+  			'#weight' => -98,
+  		);
+  		$form['actions']['submit']['#value'] = t('Login');
+  	}
+  	// Password reset form
+  	if ($form_id == "user_pass") {
+  		$form['page_title'] = array(
+  			'#prefix' => '<h1 class="title" id="page-title">',
+  			'#markup' => t('Reset Password'),
+  			'#suffix' => '</h1>',
+  			'#weight' => -99,
+  		);
+  		$form['local_tabs'] = array(
+  			'#prefix' => '<ul class="tabs primary clearfix">',
+  			'#markup' => drupal_render($tabs),
+  			'#suffix' => '</ul>',
+  			'#weight' => -98,
+  		);
+      $form['#submit'][] = 'angs_password_reset_request';
+  	}
+}
+
+function angs_password_reset_request($form, &$form_state) {
+  rules_invoke_event('angs_password_request', $form_state['values']['account']);
+}

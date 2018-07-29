@@ -1,0 +1,56 @@
+diff --git a/sites/all/modules/simplenews/simplenews.module b/sites/all/modules/simplenews/simplenews.module
+index f2c2e11..9ccad6c 100644
+--- a/sites/all/modules/simplenews/simplenews.module
++++ b/sites/all/modules/simplenews/simplenews.module
+@@ -2586,6 +2586,8 @@ function simplenews_newsletter_update_sent_status($node, $status = SIMPLENEWS_ST
+   }
+   $newsletter->status = $status;
+   simplenews_newsletter_save($newsletter);
++
++  module_invoke_all('simplenews_sent_status_update', $node, $status);
+ }
+ 
+ /**
+diff --git a/sites/all/modules/simplenews/simplenews_rules/simplenews_rules.module b/sites/all/modules/simplenews/simplenews_rules/simplenews_rules.module
+index 96cf792..6bfa26f 100755
+--- a/sites/all/modules/simplenews/simplenews_rules/simplenews_rules.module
++++ b/sites/all/modules/simplenews/simplenews_rules/simplenews_rules.module
+@@ -41,4 +41,12 @@ function simplenews_rules_simplenews_subscribe_user($subscriber, $subscription)
+     'tid' => $subscription->tid,
+   );
+   rules_invoke_event_by_args('simplenews_rules_event_subscribe', $args);
++}
++
++function simplenews_rules_simplenews_sent_status_update($node, $status) {
++  $args = array(
++    'node' => $node,
++    'status' => $status
++  );
++  rules_invoke_event_by_args('simplenews_rules_event_sent_status_update', $args);
+ }
+\ No newline at end of file
+diff --git a/sites/all/modules/simplenews/simplenews_rules/simplenews_rules.rules.inc b/sites/all/modules/simplenews/simplenews_rules/simplenews_rules.rules.inc
+index d4c9086..16152bd 100755
+--- a/sites/all/modules/simplenews/simplenews_rules/simplenews_rules.rules.inc
++++ b/sites/all/modules/simplenews/simplenews_rules/simplenews_rules.rules.inc
+@@ -182,6 +182,20 @@ function simplenews_rules_rules_event_info() {
+         ),
+       ),
+     ),
++    'simplenews_rules_event_sent_status_update' => array(
++      'label'  => t('The sent status of a newsletter has been updated'),
++      'group' => t('Simplenews'),
++      'variables'   => array(
++        'node' => array(
++          'type' => 'node',
++          'label' => t('Newsletter')
++        ),
++        'status' => array(
++          'type' => 'integer',
++          'label' => t('Sent status'),
++        ),
++      ),
++    ),
+   );
+ }
+ 

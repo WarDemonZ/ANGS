@@ -1,0 +1,4 @@
+name = ANGS Overall UI
+description = Modifies general UI content for the site.
+core = 7.x
+package = Custom

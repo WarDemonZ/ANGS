@@ -271,6 +271,20 @@ function shadowbox_global_settings() {
     '#description' => t('Enable display of QuickTime and Windows Media player movie controls.'),
     '#default_value' => variable_get('shadowbox_show_movie_controls', TRUE),
   );
+  $form['shadowbox']['shadowbox_options']['movies']['shadowbox_youtube_quality'] = array(
+    '#type' => 'select',
+    '#title' => t('Youtube Quality'),
+    '#options' => array(
+      'auto'    => t('automatic'),
+      'small'   => '240p',
+      'medium'  => '360p',
+      'large'   => '480p',
+      'hd720'   => '720p',
+      'hd1080'  => '1080p',
+    ),
+    '#description' => t('Choose youtube preferred resolution.'),
+    '#default_value' => variable_get('shadowbox_youtube_quality', 'auto'),
+  );
 
   // Input controls
   $form['shadowbox']['shadowbox_options']['input'] = array(
@@ -396,7 +410,6 @@ function shadowbox_global_settings_validate($form, &$form_state) {
  * FAPI definition for the Shadowbox automatic image handling settings form.
  *
  * @ingroup forms
- * @see shadowbox_global_settings_validate()
  */
 function shadowbox_automatic_settings() {
   $form['shadowbox_auto_enable_all_images'] = array(

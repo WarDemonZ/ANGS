@@ -11,6 +11,24 @@ function angs_orderform_form_clothing_request_entityform_edit_form_alter(&$form,
     'method' => 'replace',
     'effect' => 'fade',
   );
+  $form['field_clothing_size']['#states'] = array(
+    'visible' => array(
+      ':input[name^="field_clothing_item"]' => array(
+        array('value' => '3'),
+        array('value' => '4'),
+        array('value' => '5'),
+        array('value' => '7'),
+      ),
+    ),
+    'required' => array(
+      ':input[name^="field_clothing_item"]' => array(
+        array('value' => '3'),
+        array('value' => '4'),
+        array('value' => '5'),
+        array('value' => '7'),
+      ),
+    ),
+  );
 }
 
 /**

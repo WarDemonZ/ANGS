@@ -1,0 +1,4 @@
+name = Event Registration UI
+description = Modifies the Registration form to ANGS custom.
+core = 7.x
+package = Custom

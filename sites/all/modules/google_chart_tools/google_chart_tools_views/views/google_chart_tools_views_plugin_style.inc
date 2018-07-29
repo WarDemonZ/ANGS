@@ -25,6 +25,7 @@ class google_chart_tools_views_plugin_style extends views_plugin_style {
     $options['isstacked'] = array('default' => FALSE);
     $options['pointsize'] = array('default' => 0);
     $options['colors'] = array('default' => '');
+    $options['background_color'] = array('default' => '');
 
     return $options;
   }
@@ -111,6 +112,13 @@ class google_chart_tools_views_plugin_style extends views_plugin_style {
       '#size' => 32,
       '#default_value' => $this->options['colors'],
     );
+    $form['background_color'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Background Color'),
+      '#description' => t('A color string. Ex. red, #004411'),
+      '#size' => 32,
+      '#default_value' => $this->options['background_color'],
+    ); 
   }
 
   function render() {
@@ -196,7 +204,8 @@ class google_chart_tools_views_plugin_style extends views_plugin_style {
         'title' => $this->options['title'],
         'width' => $this->options['width'],
         'height' => $this->options['height'],
-        'allowHtml' => TRUE
+        'allowHtml' => TRUE,
+        'backgroundColor' => $this->options['background_color']
       )
     );
 

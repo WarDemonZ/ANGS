@@ -1,0 +1,4 @@
+name = ANGS Google Map
+description = Modifies the Google Map embed to include more information and the link.
+core = 7.x
+package = Custom

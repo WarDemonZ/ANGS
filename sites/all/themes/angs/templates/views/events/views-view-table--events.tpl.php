@@ -19,6 +19,16 @@
  * @ingroup views_templates
  */
 ?>
+<?php 
+  $header = array_slice($header, 1);
+  $row_array = array();
+  for ($i = 0; $i < count($rows); $i++) { 
+    if (!array_key_exists($rows[$i]['nid'], $row_array)) {
+      $row_array[$rows[$i]['nid']] = array_slice($rows[$i], 1);
+    }
+  }
+  $rows = array_values($row_array);
+?>
 <table <?php if ($classes) { print 'class="'. $classes . '" '; } ?><?php print $attributes; ?>>
    <?php if (!empty($title) || !empty($caption)) : ?>
      <caption><?php print $caption . $title; ?></caption>

@@ -182,6 +182,20 @@ function simplenews_rules_rules_event_info() {
         ),
       ),
     ),
+    'simplenews_rules_event_sent_status_update' => array(
+      'label'  => t('The sent status of a newsletter has been updated'),
+      'group' => t('Simplenews'),
+      'variables'   => array(
+        'node' => array(
+          'type' => 'node',
+          'label' => t('Newsletter')
+        ),
+        'status' => array(
+          'type' => 'integer',
+          'label' => t('Sent status'),
+        ),
+      ),
+    ),
   );
 }
 

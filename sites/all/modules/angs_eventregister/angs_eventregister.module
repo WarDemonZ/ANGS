@@ -1,0 +1,11 @@
+<?php
+/*
+* Invokes hook_form_FORM_ID_alter()
+*/
+function angs_eventregister_form_registration_form_alter(&$form, &$form_state, $form_id) {
+  global $user;
+  
+  $form['who_message']['#markup'] = '<div class="registration-who-msg">You are: <strong>Not Attending</strong></div>';
+  $form['actions']['submit']['#value'] = t('I wish to attend this event');
+  unset($form['actions']['cancel']);
+}

@@ -42,3 +42,11 @@ function simplenews_rules_simplenews_subscribe_user($subscriber, $subscription) 
   );
   rules_invoke_event_by_args('simplenews_rules_event_subscribe', $args);
 }
+
+function simplenews_rules_simplenews_sent_status_update($node, $status) {
+  $args = array(
+    'node' => $node,
+    'status' => $status
+  );
+  rules_invoke_event_by_args('simplenews_rules_event_sent_status_update', $args);
+}

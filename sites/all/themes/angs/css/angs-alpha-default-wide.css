@@ -1,2 +1,10 @@
 /* This file will hold styles that are loaded using the same media query as the wide grid. */
 
+/* BREAKPOINT VISIBILITY */
+.visible-desktop { display: block; }
+.visible-tablet { display: none; }
+.visible-phone { display: none; }
+
+.hidden-desktop { display: none; }
+.hidden-tablet { display: block; }
+.hidden-phone { display: block; }
