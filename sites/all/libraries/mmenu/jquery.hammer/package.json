@@ -16,7 +16,7 @@
   ],
   "dependencies": {
     "hammerjs": "2.0.x",
-    "jquery": "2.1.x"
+    "jquery": ">=3.0.0"
   },
   "author": "J. Tangelder",
   "license": "MIT",
